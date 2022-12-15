@@ -26,7 +26,7 @@ public class EmployeeController {
 
     // TODO 02 발리데이션 에러 처리
     if (result.hasErrors()) {
-      throw new RuntimeException("Validation Error");
+      throw new RuntimeException("Employee Validation Error");
     }
 
     return employeeService.registerEmployee(request);

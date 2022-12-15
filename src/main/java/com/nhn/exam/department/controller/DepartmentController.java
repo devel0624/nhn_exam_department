@@ -28,7 +28,7 @@ public class DepartmentController {
 
     // TODO 02 발리데이션 에러 처리
     if (result.hasErrors()) {
-      throw new RuntimeException("Validation Error");
+      throw new RuntimeException("Department Validation Error");
     }
 
     return departmentService.registerDepartment(request);

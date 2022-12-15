@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DepartmentInfoServiceImpl implements DepartmentInfoService {
 
   private final DepartmentInfoRepository departmentInfoRepository;
-
+  
   public DepartmentInfoServiceImpl(DepartmentInfoRepository departmentInfoRepository) {
     this.departmentInfoRepository = departmentInfoRepository;
   }
