@@ -21,7 +21,10 @@ public class DepartmentInfoServiceImpl implements DepartmentInfoService {
     List<DepartmentInfoDTO> infoList = departmentInfoRepository.findAllByDepartment_IdIn(ids);
 
     if (infoList.isEmpty()) {
-
+      // TODO 01 예외처리 작성
+      throw new RuntimeException("검색된 부서가 없음");
     }
+
+    return infoList;
   }
 }
