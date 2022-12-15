@@ -21,3 +21,9 @@ Host: localhost:8080
 Accept: application/json
 
 ###
+
+GET /department-info?departmentIds=L1001,L1002
+Host: localhost:8080
+Accept: application/xml
+
+###

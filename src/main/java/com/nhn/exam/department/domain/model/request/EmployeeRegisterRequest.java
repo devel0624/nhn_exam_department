@@ -16,7 +16,7 @@ public class EmployeeRegisterRequest {
   String id;
 
 
-  @Length(max = 30)
+  @Length(max = 50)
   @NotBlank
   String name;
 }

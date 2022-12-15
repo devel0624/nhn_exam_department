@@ -7,3 +7,10 @@ Accept: application/json
   "id": "20202201",
   "name": "김이름"
 }
+
+###
+
+GET /employee?employeeId=20202201
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json

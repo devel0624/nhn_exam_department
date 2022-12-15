@@ -1,9 +1,9 @@
 package com.nhn.exam.department.service.impl;
 
 import com.nhn.exam.department.domain.entity.Employee;
-import com.nhn.exam.department.domain.model.projection.EmployeeProjection;
 import com.nhn.exam.department.domain.model.request.EmployeeRegisterRequest;
 import com.nhn.exam.department.domain.repository.EmployeeRepository;
+import com.nhn.exam.department.exception.EmployeeNotFoundException;
 import com.nhn.exam.department.service.EmployeeService;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -29,24 +29,11 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public EmployeeProjection getEmployeeById(String id) {
-    Optional<EmployeeProjection> employee =
-        employeeRepository.findById(id, EmployeeProjection.class);
-
-    //TODO 03 존재하지 않는 사원 예외 처리
-    if (employee.isEmpty()) {
-      throw new RuntimeException("존재하지 않는 사원 번호");
-    }
-
-    return employee.get();
-  }
-
-  @Override
-  public Employee findById(String id) {
-    Optional<Employee> employee = employeeRepository.findById(id);
+  public <T> T getEmployeeById(String id, Class<T> type) {
+    Optional<T> employee = employeeRepository.findById(id, type);
 
     if (employee.isEmpty()) {
-      throw new RuntimeException("존재하지 않는 사원 번호");
+      throw new EmployeeNotFoundException();
     }
 
     return employee.get();

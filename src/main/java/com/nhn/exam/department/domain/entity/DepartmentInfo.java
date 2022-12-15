@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,19 +21,19 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Department_Info")
+@Table(name = "Department_info")
 public class DepartmentInfo {
   @EmbeddedId
   private Pk pk;
-  
+
   @MapsId("employeeId")
   @ManyToOne
-  @JoinColumn(name = "employee_id")
+  @JoinColumn(name = "employee_id", columnDefinition = "VARCHAR(20)", nullable = false)
   private Employee employee;
 
   @MapsId("departmentId")
   @ManyToOne
-  @JoinColumn(name = "department_id")
+  @JoinColumn(name = "department_id", columnDefinition = "VARCHAR(10)", nullable = false)
   private Department department;
 
   @Embeddable
@@ -43,10 +44,12 @@ public class DepartmentInfo {
   @Setter
   public static class Pk implements Serializable {
 
-    @Column(name = "employee_id")
+    @NotNull
+    @Column(name = "employee_id", nullable = false)
     private String employeeId;
 
-    @Column(name = "department_id")
+    @NotNull
+    @Column(name = "department_id", nullable = false)
     private String departmentId;
   }
 }

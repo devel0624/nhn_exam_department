@@ -1,12 +1,13 @@
 package com.nhn.exam.department.service.impl;
 
+import com.nhn.exam.department.domain.entity.Department;
 import com.nhn.exam.department.domain.entity.DepartmentInfo;
-import com.nhn.exam.department.domain.model.projection.DepartmentInfoProjection;
+import com.nhn.exam.department.domain.entity.Employee;
 import com.nhn.exam.department.domain.model.request.DepartmentRegisterRequest;
 import com.nhn.exam.department.domain.model.request.EmployeeRegisterRequest;
 import com.nhn.exam.department.domain.model.request.InfoRegisterRequest;
 import com.nhn.exam.department.domain.repository.DepartmentInfoRepository;
-import com.nhn.exam.department.domain.repository.DepartmentRepository;
+import com.nhn.exam.department.exception.DepartmentInfoNotFoundException;
 import com.nhn.exam.department.file.request.InitDepartmentInfo;
 import com.nhn.exam.department.service.DepartmentInfoService;
 import com.nhn.exam.department.service.DepartmentService;
@@ -24,52 +25,48 @@ public class DepartmentInfoServiceImpl implements DepartmentInfoService {
 
   private final EmployeeService employeeService;
   private final DepartmentService departmentService;
-  private final DepartmentRepository departmentRepository;
+
 
   public DepartmentInfoServiceImpl(DepartmentInfoRepository departmentInfoRepository,
                                    EmployeeService employeeService,
-                                   DepartmentService departmentService,
-                                   DepartmentRepository departmentRepository) {
+                                   DepartmentService departmentService) {
     this.departmentInfoRepository = departmentInfoRepository;
     this.employeeService = employeeService;
     this.departmentService = departmentService;
-    this.departmentRepository = departmentRepository;
   }
 
-  @Override
   @Transactional(readOnly = false)
+  @Override
   public void registerDepartmentInfo(InfoRegisterRequest request) {
     DepartmentInfo departmentInfo = new DepartmentInfo();
 
     departmentInfo.setPk(new DepartmentInfo.Pk(request.getEmployeeId(), request.getDepartmentId()));
-    departmentInfo.setDepartment(departmentService.findDepartmentById(request.getDepartmentId()));
-    departmentInfo.setEmployee(employeeService.findById(request.getEmployeeId()));
+    departmentInfo.setDepartment(departmentService.getDepartmentById(request.getDepartmentId(),
+        Department.class));
+    departmentInfo.setEmployee(
+        employeeService.getEmployeeById(request.getEmployeeId(), Employee.class));
 
     departmentInfoRepository.saveAndFlush(departmentInfo);
-    
   }
 
   @Override
-  public List<DepartmentInfoProjection> getDepartmentInfoListByIds(List<String> ids) {
-    List<DepartmentInfoProjection> infoList =
-        departmentInfoRepository.findAllByDepartment_IdIn(ids, DepartmentInfoProjection.class);
+  public <T> List<T> getDepartmentInfoListByIds(List<String> ids, Class<T> type) {
+    List<T> infoList =
+        departmentInfoRepository.findAllByDepartment_IdIn(ids, type);
 
     if (infoList.isEmpty()) {
-      // TODO 01 예외처리 작성
-      throw new RuntimeException("검색된 조직 정보가 없음");
+      throw new DepartmentInfoNotFoundException();
     }
 
     return infoList;
   }
 
   @Override
-  public DepartmentInfoProjection getDepartmentInfoByIds(DepartmentInfo.Pk pk) {
-    Optional<DepartmentInfoProjection> info =
-        departmentInfoRepository.findByPk(pk, DepartmentInfoProjection.class);
+  public <T> T getDepartmentInfoByIds(DepartmentInfo.Pk pk, Class<T> type) {
+    Optional<T> info = departmentInfoRepository.findByPk(pk, type);
 
     if (info.isEmpty()) {
-      // TODO 01 예외처리 작성
-      throw new RuntimeException("검색된 조직 정보가 없음");
+      throw new DepartmentInfoNotFoundException();
     }
 
     return info.get();

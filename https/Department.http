@@ -7,3 +7,10 @@ Accept: application/json
   "id": "L1001",
   "name": "백엔드1팀"
 }
+
+###
+
+GET /department?departmentId=L1001
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json
