@@ -4,7 +4,6 @@ import com.nhn.exam.department.domain.model.projection.DepartmentProjection;
 import com.nhn.exam.department.domain.model.request.DepartmentRegisterRequest;
 import com.nhn.exam.department.service.DepartmentService;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +31,8 @@ public class DepartmentController {
       throw new RuntimeException("Validation Error");
     }
 
-    DepartmentProjection projection = departmentService.registerDepartment(request);
-
-    return projection;
+    return departmentService.registerDepartment(request);
   }
+
+
 }

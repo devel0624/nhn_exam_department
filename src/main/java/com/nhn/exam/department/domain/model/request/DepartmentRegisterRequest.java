@@ -13,10 +13,10 @@ public class DepartmentRegisterRequest {
 
   @Length(max = 10)
   @NotBlank
-  String departmentId;
+  String id;
 
 
   @Length(max = 50)
   @NotBlank
-  String departmentName;
+  String name;
 }

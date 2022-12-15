@@ -1,0 +1,8 @@
+POST /department
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "id": "L1001",
+  "name": "백엔드1팀"
+}

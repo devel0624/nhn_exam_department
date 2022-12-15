@@ -13,10 +13,10 @@ public class EmployeeRegisterRequest {
 
   @Length(max = 20)
   @NotBlank
-  String employeeId;
+  String id;
 
 
   @Length(max = 30)
   @NotBlank
-  String employeeName;
+  String name;
 }
