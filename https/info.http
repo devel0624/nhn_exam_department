@@ -7,3 +7,17 @@ Accept: application/json
   "departmentId": "L1001",
   "employeeId": "20202201"
 }
+
+###
+
+GET /department-info?departmentIds=L1001,L1002
+Host: localhost:8080
+Accept: application/json
+
+###
+
+GET /department-info?departmentIds=
+Host: localhost:8080
+Accept: application/json
+
+###

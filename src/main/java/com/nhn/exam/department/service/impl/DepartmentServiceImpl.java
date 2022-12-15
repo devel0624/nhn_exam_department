@@ -20,12 +20,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   @Override
   @Transactional(readOnly = false)
-  public DepartmentProjection registerDepartment(DepartmentRegisterRequest request) {
+  public void registerDepartment(DepartmentRegisterRequest request) {
     Department department = new Department(request.getId(), request.getName());
 
     departmentRepository.saveAndFlush(department);
 
-    return getDepartmentById(request.getId());
   }
 
   @Override
@@ -34,6 +33,17 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentRepository.findById(id, DepartmentProjection.class);
 
     //TODO 03 존재하지 않는 부서 예외 처리
+    if (department.isEmpty()) {
+      throw new RuntimeException("부서 존재하지 않는 부서 코드");
+    }
+
+    return department.get();
+  }
+
+  @Override
+  public Department findDepartmentById(String id) {
+    Optional<Department> department = departmentRepository.findById(id);
+
     if (department.isEmpty()) {
       throw new RuntimeException("부서 존재하지 않는 부서 코드");
     }

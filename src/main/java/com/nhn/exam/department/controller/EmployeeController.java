@@ -2,6 +2,7 @@ package com.nhn.exam.department.controller;
 
 import com.nhn.exam.department.domain.model.projection.EmployeeProjection;
 import com.nhn.exam.department.domain.model.request.EmployeeRegisterRequest;
+import com.nhn.exam.department.exception.ValidationFailedException;
 import com.nhn.exam.department.service.EmployeeService;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
@@ -24,12 +25,13 @@ public class EmployeeController {
   public EmployeeProjection registerDepartment(
       @Valid @RequestBody EmployeeRegisterRequest request, BindingResult result) {
 
-    // TODO 02 발리데이션 에러 처리
     if (result.hasErrors()) {
-      throw new RuntimeException("Employee Validation Error");
+      throw new ValidationFailedException(result);
     }
 
-    return employeeService.registerEmployee(request);
+    employeeService.registerEmployee(request);
+
+    return employeeService.getEmployeeById(request.getId());
   }
 
 }

@@ -21,12 +21,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   @Transactional(readOnly = false)
-  public EmployeeProjection registerEmployee(EmployeeRegisterRequest request) {
+  public void registerEmployee(EmployeeRegisterRequest request) {
     Employee employee = new Employee(request.getId(), request.getName());
 
     employeeRepository.saveAndFlush(employee);
 
-    return getEmployeeById(request.getId());
   }
 
   @Override
@@ -36,7 +35,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //TODO 03 존재하지 않는 사원 예외 처리
     if (employee.isEmpty()) {
-      throw new RuntimeException("부서 존재하지 않는 부서 코드");
+      throw new RuntimeException("존재하지 않는 사원 번호");
+    }
+
+    return employee.get();
+  }
+
+  @Override
+  public Employee findById(String id) {
+    Optional<Employee> employee = employeeRepository.findById(id);
+
+    if (employee.isEmpty()) {
+      throw new RuntimeException("존재하지 않는 사원 번호");
     }
 
     return employee.get();
