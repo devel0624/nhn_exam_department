@@ -32,7 +32,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     Optional<DepartmentProjection> department =
         departmentRepository.findById(id, DepartmentProjection.class);
 
-    ˆ//TODO 03 존재하지 않는 부서 예외 처리
+    //TODO 03 존재하지 않는 부서 예외 처리
     if (department.isEmpty()) {
       throw new RuntimeException("부서 존재하지 않는 부서 코드");
     }
