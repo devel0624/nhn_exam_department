@@ -1,0 +1,9 @@
+POST /department-info
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json
+
+{
+  "departmentId": "L1001",
+  "employeeId": "20202201"
+}
