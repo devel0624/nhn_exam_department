@@ -1,6 +1,6 @@
 package com.nhn.exam.department.service.impl;
 
-import com.nhn.exam.department.domain.model.DepartmentInfoDTO;
+import com.nhn.exam.department.domain.model.projection.DepartmentInfoProjection;
 import com.nhn.exam.department.domain.repository.DepartmentInfoRepository;
 import com.nhn.exam.department.service.DepartmentInfoService;
 import java.util.List;
@@ -17,8 +17,9 @@ public class DepartmentInfoServiceImpl implements DepartmentInfoService {
     this.departmentInfoRepository = departmentInfoRepository;
   }
 
-  public List<DepartmentInfoDTO> getDepartmentInfoByIds(List<String> ids) {
-    List<DepartmentInfoDTO> infoList = departmentInfoRepository.findAllByDepartment_IdIn(ids);
+  public List<DepartmentInfoProjection> getDepartmentInfoByIds(List<String> ids) {
+    List<DepartmentInfoProjection> infoList =
+        departmentInfoRepository.findAllByDepartment_IdIn(ids);
 
     if (infoList.isEmpty()) {
       // TODO 01 예외처리 작성
