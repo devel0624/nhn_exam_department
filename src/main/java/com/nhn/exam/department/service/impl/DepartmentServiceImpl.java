@@ -28,7 +28,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     return getDepartmentById(request.getId());
   }
 
-  private DepartmentProjection getDepartmentById(String id) {
+  @Override
+  public DepartmentProjection getDepartmentById(String id) {
     Optional<DepartmentProjection> department =
         departmentRepository.findById(id, DepartmentProjection.class);
 

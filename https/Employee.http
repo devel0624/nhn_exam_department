@@ -1,6 +1,7 @@
 POST /employee
 Host: localhost:8080
 Content-Type: application/json
+Accept: application/json
 
 {
   "id": "20202201",

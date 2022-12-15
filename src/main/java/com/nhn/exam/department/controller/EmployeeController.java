@@ -1,7 +1,7 @@
 package com.nhn.exam.department.controller;
 
-import com.nhn.exam.department.domain.model.projection.DepartmentProjection;
-import com.nhn.exam.department.domain.model.request.DepartmentRegisterRequest;
+import com.nhn.exam.department.domain.model.projection.EmployeeProjection;
+import com.nhn.exam.department.domain.model.request.EmployeeRegisterRequest;
 import com.nhn.exam.department.service.EmployeeService;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
@@ -21,15 +21,15 @@ public class EmployeeController {
   }
 
   @PostMapping
-  public DepartmentProjection registerDepartment(
-      @Valid @RequestBody DepartmentRegisterRequest request, BindingResult result) {
+  public EmployeeProjection registerDepartment(
+      @Valid @RequestBody EmployeeRegisterRequest request, BindingResult result) {
 
     // TODO 02 발리데이션 에러 처리
     if (result.hasErrors()) {
       throw new RuntimeException("Validation Error");
     }
 
-    return employeeService.registerDepartment(request);
+    return employeeService.registerEmployee(request);
   }
 
 }
