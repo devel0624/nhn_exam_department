@@ -4,14 +4,16 @@ import com.nhn.exam.department.domain.entity.DepartmentInfo;
 import com.nhn.exam.department.domain.model.projection.DepartmentInfoProjection;
 import com.nhn.exam.department.domain.model.request.InfoRegisterRequest;
 import com.nhn.exam.department.exception.AcceptHeaderNotExistException;
-import com.nhn.exam.department.exception.DoNotRequestAcceptHeaderWithJson;
+import com.nhn.exam.department.exception.NotRequestedAcceptHeaderWithJson;
 import com.nhn.exam.department.exception.RequiredParameterNotExistException;
 import com.nhn.exam.department.exception.ValidationFailedException;
 import com.nhn.exam.department.service.DepartmentInfoService;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -34,6 +37,7 @@ public class DepartmentInfoController {
   }
 
   @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
   public DepartmentInfoProjection registerInfo(@Valid @RequestBody InfoRegisterRequest request,
                                                BindingResult result) {
 
@@ -48,15 +52,16 @@ public class DepartmentInfoController {
   }
 
   @GetMapping
+  @ResponseStatus(HttpStatus.OK)
   public List<DepartmentInfoProjection> getInfoList(
       @RequestHeader(value = "Accept") Optional<String> accept,
-      @RequestParam("departmentIds") List<String> departmentIds) {
+      @RequestParam(value = "departmentIds", required = false) List<String> departmentIds) {
 
     if (accept.isEmpty()) {
       throw new AcceptHeaderNotExistException();
     } else if (!accept.get().equals(MediaType.APPLICATION_JSON.toString())) {
-      throw new DoNotRequestAcceptHeaderWithJson();
-    } else if (departmentIds.isEmpty()) {
+      throw new NotRequestedAcceptHeaderWithJson();
+    } else if (Objects.isNull(departmentIds) || departmentIds.isEmpty()) {
       throw new RequiredParameterNotExistException();
     }
 

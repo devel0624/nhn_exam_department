@@ -16,7 +16,7 @@ Accept: application/json
 
 ###
 
-GET /department-info?departmentIds=
+GET /department-info
 Host: localhost:8080
 Accept: application/json
 

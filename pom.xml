@@ -89,7 +89,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>department</finalName>
+        <finalName>application</finalName>
     </build>
 
 </project>

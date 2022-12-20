@@ -1,15 +1,13 @@
 package com.nhn.exam.department.controller;
 
 import com.nhn.exam.department.exception.AcceptHeaderNotExistException;
-import com.nhn.exam.department.exception.DoNotRequestAcceptHeaderWithJson;
+import com.nhn.exam.department.exception.NotRequestedAcceptHeaderWithJson;
 import com.nhn.exam.department.exception.RequiredParameterNotExistException;
 import com.nhn.exam.department.exception.ValidationFailedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
@@ -23,7 +21,7 @@ public class WebControllerAdvice {
     return treatException(ex);
   }
 
-  @ExceptionHandler(DoNotRequestAcceptHeaderWithJson.class)
+  @ExceptionHandler(NotRequestedAcceptHeaderWithJson.class)
   @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "ACCET 헤더가 존재하지만 'application/json' 으로 요청해야합니다.")
   public String doNotRequestAcceptHeaderWithJson(Exception ex) {
     return treatException(ex);
